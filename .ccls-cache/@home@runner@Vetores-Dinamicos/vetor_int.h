@@ -1,5 +1,5 @@
-#ifndef _ARRAY_LIST_INT_H_ 
-#define _ARRAY_LIST_INT_H_
+#ifndef _ARRAY_INT_H_ 
+#define _ARRAY_INT_H_
 
 typedef struct vetor_int vetor_int;
 
@@ -14,7 +14,7 @@ unsigned int vetor_push(vetor_int *vetor, int x);
 
 unsigned int vetor_pop(vetor_int *vetor);
 
-unsigned int vetor_tamanho(vetor_int *vetor);
+unsigned int vetor_size(vetor_int *vetor);
 
 int vetor_find(vetor_int *vetor, int elemento);
 

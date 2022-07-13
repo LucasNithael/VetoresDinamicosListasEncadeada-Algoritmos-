@@ -7,6 +7,12 @@ struct vetor_int {
   unsigned int tamanho, capacidade;
 };
 
+
+/*
+-Função sem retorno para mostrar os elementos do vetor inserido como arguemtno;
+-Percorre o vetor de acordo com seu tamanho e imprime os elementos do índice 0 ao tamanho-1;
+-Seu desempenho Big O: O(n);
+*/
 void vetor_print(vetor_int *vetor) {
   printf("{ ");
   for (int i = 0; i < vetor->tamanho; i++)
@@ -14,24 +20,50 @@ void vetor_print(vetor_int *vetor) {
   printf("}");
 }
 
+/*
+-Função para criar um vetor com espaço de memória;
+-*vetor: é criado o ponteiro que recebe o espaço de memória de acordo com tipo do struct que será retornado para o ponteiro que apontará para o mesmo espaço de memória;
+-Tamanho: para esta função não é necessário definir o tamanho do vetor;
+-Capacidade: o valor da capacidade é mutável para casos de testes;
+-Dado: o espaço que ficará armazenado os valores definidos para o vetor será de acordo com a capacidade do vetor;
+-Seu desempenho Big O: O(1);
+*/
 vetor_int *vetor_create() {
   vetor_int *vetor = (vetor_int *)malloc(sizeof(vetor_int));
-  vetor->dado = (int *)malloc(sizeof(int) * 10);
   vetor->tamanho = 0;
   vetor->capacidade = 10;
+  vetor->dado = (int*)malloc(sizeof(int)*vetor->capacidade);
   return vetor;
 }
 
+/*
+-Função usada para consultar o elemento do índice recebido com parâmetro;
+-É definida uma condição para verificar se o índice pertence ao intervalo valido para a consulta;
+-È retornado o valor do índice;
+-Desempenho Big O: O(1);
+*/
 int vetor_get(vetor_int *vetor, int indice) {
   if (indice >= 0 && indice <= vetor->tamanho - 1)
     return vetor->dado[indice];
-  return -1;
+  return 0;
 }
 
+/*
+-Função usada para inserir elementos no fim do vetor;
+-Sucesso: variável que define se a função foi executada com sucesso: sim!=0 , não=0;
+-Verificação para saber se a quantidade de elementos chegou ao capacidade limite, se sim, a capacidade será incrementada 100% do seu valor;
+-*opia: ponteiro que terá o tamanho da nova capacidade;
+-*antigo: recebe os dados do *vetor;
+-for: *copia recebe os elementos do *vetor apotados por *antigo
+-Os dados do *vetor com capaciade antiga recebe os mesmo dados apontados por *copia com a capacidade acrescentada;
+-Liberamos o espaço de memória de antigo;
+-O elemento é inserido no índice tamnho++;
+-Desempenho Big O: O(n);
+*/
 unsigned int vetor_push(vetor_int *vetor, int x) {
   int sucesso = 0;
   if (vetor->tamanho == vetor->capacidade) {
-    vetor->capacidade = vetor->capacidade + 10;
+    vetor->capacidade = vetor->capacidade + vetor->capacidade;
     int *copia = (int *)malloc(sizeof(int) * (vetor->capacidade));
     int *antigo = vetor->dado;
     for (int i = 0; i < vetor->tamanho; i++)
@@ -44,6 +76,12 @@ unsigned int vetor_push(vetor_int *vetor, int x) {
   return sucesso;
 }
 
+/*
+-Função para excluir último elemento;
+-Sucesso: variável que define se a função foi executada com sucesso: sim!=0 , não=0;
+-Verifica se há elementos no vetor;
+-
+*/
 unsigned int vetor_pop(vetor_int *vetor) {
   int sucesso = 0, i;
   if (vetor->tamanho > 0) {
@@ -57,7 +95,7 @@ unsigned int vetor_pop(vetor_int *vetor) {
   return sucesso;
 }
 
-unsigned int vetor_tamanho(vetor_int *vetor) {
+unsigned int vetor_size(vetor_int *vetor) {
   if (vetor->tamanho > 0)
     return vetor->tamanho;
   return 0;
@@ -83,10 +121,12 @@ int vetor_insert(vetor_int *vetor, int indice, int elemento) {
     free(antigo);
     sucesso++;
   }
-  if (indice >= vetor->tamanho)
-    for (int i = indice; i < vetor->tamanho + 1; i++) {
-      vetor->dado[i + 1] = vetor->dado[i];
-    }
+
+  for (int i = vetor->tamanho; i >= indice; i--) {
+    vetor->dado[i] = vetor->dado[i-1];
+    
+  }
+  
   vetor->dado[indice] = elemento;
   vetor->tamanho++;
   return sucesso;
@@ -117,6 +157,4 @@ double vetor_percent(vetor_int *vetor) {
   return percentual;
 }
 
-void vetor_destroy(vetor_int *vetor){
-  free(vetor);
-}
+void vetor_destroy(vetor_int *vetor) { free(vetor); }

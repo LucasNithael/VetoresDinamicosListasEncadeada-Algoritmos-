@@ -1,3 +1,4 @@
+#include "lista_int.h"
 #include "vetor_int.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,38 +7,80 @@
 int main() {
   clock_t inicio, fim;
   inicio = clock();
-  struct vetor_int *vetor = vetor_create(); // Cria vetor
+  /*VETORES DINÂMICOS*/
+  /*struct vetor_int *vetor = vetor_create(); // Cria vetor
 
-  for (int i = 0; i < 10; i++)
-    vetor_push(vetor, i * 2); // Insere elementos no fim do vetor
+  for (int i = 0; i < 12; i++)
+    vetor_push(vetor, i); // Insere elementos no fim do vetor
   vetor_print(vetor); // Função para percorrer e mostrar elementos do vetor
 
-  printf("\n%d ", vetor_get(vetor, 5)); // Busca elementos por indice
+  printf("\nElemento do índice %d : %d",5 ,vetor_get(vetor, 5)); // Busca
+  elementos por indice
 
   printf("\n");
-  
+
   for (int i = 0; i < 5; i++)
     vetor_pop(vetor); // Exclue elemento do fim do vetor
 
   vetor_print(vetor);
-  
-  printf("\nTamanho do vetor: %d", vetor_tamanho(vetor)); //Consultar tamanho do vetor
-  
-  printf("\nElemento: %d índice: %d", 10 ,vetor_find(vetor, 10)); //Consultar índice de elemento
 
-  //printf("\nInserir: %d no índice: %d\n",3 ,100);
-   //vetor_insert(vetor, 1, 100);          //insere elemento no índice desejado
-  //vetor_print(vetor);
+  printf("\nTamanho do vetor: %d", vetor_tamanho(vetor)); //Consultar tamanho do
+  vetor
 
-  printf("\nRemover do índice: %d\n",3);
-  vetor_remove(vetor,  4);    //Remove elemento do índice desejado
+  printf("\nElemento: %d índice: %d", 10 ,vetor_find(vetor, 10)); //Consultar
+  índice de elemento
+
+  printf("\nInserir: %d no índice: %d\n",3 ,100);
+   vetor_insert(vetor, 3, 100);          //insere elemento no índice desejado
   vetor_print(vetor);
 
+  printf("\nRemover do índice: %d\n",3);
+  vetor_remove(vetor,  3);    //Remove elemento do índice desejado
+  vetor_print(vetor);
+
+  printf("\nTamanho do vetor: %d", vetor_size(vetor));
   printf("\nCapacidade do vetor: %d", vetor_capacity(vetor));
 
-  printf("\ncupação da capacidade do vetor: %.2lf", vetor_percent(vetor));
+  //vetor_destroy(vetor);
+
+  printf("\nOcupação da capacidade do vetor: %.2lf", vetor_percent(vetor));*/
+
+  /*  LISTA DUPLAMENTE LIGADA*/
+
+  struct lista_ll *lista = lista_create();
+
+for (int i = 1; i < 5; i++) {
+   inserir_inicio(lista, i);
+  }
+
+
+for (int i = 1; i < 5; i++) {
+   lista_push(lista, i);
+  }
+  
+
+
+  //remove_inicio(lista);
+  
+lista_print(lista);
+  
 
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  //lista_print(lista);
+  
+  printf("Tamanho da lista: %d\n", lista_size(lista));
+
+  
+
   
   fim = clock();
   double elapsedTime = (fim - inicio) / (CLOCKS_PER_SEC / 1000.0);
