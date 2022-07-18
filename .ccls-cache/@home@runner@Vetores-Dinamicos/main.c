@@ -49,39 +49,21 @@ int main() {
 
   struct lista_ll *lista = lista_create();
 
-for (int i = 1; i < 5; i++) {
-   inserir_inicio(lista, i);
+  for (int i = 1; i < 5; i++) {
+    lista_push(lista, i);
   }
 
+  // remove_inicio(lista);
 
-for (int i = 1; i < 5; i++) {
-   lista_push(lista, i);
-  }
-  
+  lista_print(lista);
 
+  // lista_print(lista);
 
-  //remove_inicio(lista);
-  
-lista_print(lista);
-  
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  //lista_print(lista);
+  lista_insert_index(lista, 1, 5);
+  lista_print(lista);
   
   printf("Tamanho da lista: %d\n", lista_size(lista));
 
-  
-
-  
   fim = clock();
   double elapsedTime = (fim - inicio) / (CLOCKS_PER_SEC / 1000.0);
   printf("\nTempo decorrido: %lfms\n", elapsedTime);

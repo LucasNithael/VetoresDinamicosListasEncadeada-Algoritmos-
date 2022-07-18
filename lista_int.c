@@ -20,14 +20,6 @@ void lista_print(struct lista_ll *lista) {
   printf("NULL\n");
 }
 
-void inserir_inicio(struct lista_ll *lista, int elemento) {
-  struct lista *novo = (struct lista *)malloc(sizeof(struct lista));
-  novo->valor = elemento;
-  novo->proximo = lista->primeiro;
-  lista->primeiro = novo;
-  lista->tamanho++;
-}
-
 unsigned int lista_size(struct lista_ll *lista) { return lista->tamanho; }
 
 void lista_push(struct lista_ll *lista, int elemento) {
@@ -35,15 +27,18 @@ void lista_push(struct lista_ll *lista, int elemento) {
   struct lista *aux;
   novo = (struct lista *)malloc(sizeof(struct lista));
   novo->valor = elemento;
+  novo->anterior = lista->ultimo;
   novo->proximo = NULL;
-  if (lista->primeiro == 0)
+  if (lista->primeiro == 0){
     lista->primeiro = novo;
+    novo->anterior=NULL;
+  }
   else {
     aux = lista->primeiro;
-    while(aux->proximo!=0)
+    while (aux->proximo != 0)
       aux = aux->proximo;
     aux->proximo = novo;
-    
+    novo->anterior = aux;
   }
   lista->tamanho++;
 }
@@ -63,7 +58,22 @@ int lista_pop(struct lista_ll *lista) {
 }
 
 
-int remove_inicio(struct lista_ll *lista){
+/*Precisa de lista duplamente encadeada*/
+void lista_insert_index(struct lista_ll *lista, int indice, int elemento) {
+  struct lista *novo;
+  novo->valor = elemento;
+  struct lista *aux = lista->primeiro;
+  for (int i = 0; i < indice; i++) {
+    aux = aux->proximo;
+  }
+  novo->proximo = aux->proximo;  
+  aux->proximo = novo;
+  novo->anterior = aux;
+  (novo->proximo)->anterior = novo;
+
+}
+
+/*int remove_inicio(struct lista_ll *lista){
   if(lista->primeiro==0)
     return -1;
   int r = lista->primeiro->valor;
@@ -71,13 +81,12 @@ int remove_inicio(struct lista_ll *lista){
   lista->primeiro = lista->primeiro->proximo;
   free(velho);
   return r;
-}
+}*/
 
-void lista_insert_index(struct lista_ll *lista, int indice, int elemento){
-  struct lista_ll *anterior;
-  int i = 0;
-  while(i!=indice){
-    
-  }
-
-}
+/*void inserir_inicio(struct lista_ll *lista, int elemento) {
+  struct lista *novo = (struct lista *)malloc(sizeof(struct lista));
+  novo->valor = elemento;
+  novo->proximo = lista->primeiro;
+  lista->primeiro = novo;
+  lista->tamanho++;
+}*/
